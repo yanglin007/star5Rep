@@ -115,6 +115,12 @@ def addLibs(request):
     lib.save()
     lib = Libs(lib_name='Export Data to Json',lib_func='export_json')
     lib.save()
+    lib = Libs(lib_name='Export Data to Pie',lib_func='data_to_pie')
+    lib.save()
+    lib = Libs(lib_name='Export Data to Line',lib_func='data_to_line')
+    lib.save()
+    lib = Libs(lib_name='Export Data to Bar',lib_func='data_to_bar')
+    lib.save()
     # addWf()
 
 

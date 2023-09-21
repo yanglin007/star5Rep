@@ -32,5 +32,7 @@ urlpatterns = [
     path('runWf',views.runWorkFlow),
     path("getWf",views.getWorkFlow),
     path("cogsearch",views.cogsearch),
-    path("getLib",views.getLib)
+    path("getLib",views.getLib),
+    path("llm",views.llmRequest)
+
 ]

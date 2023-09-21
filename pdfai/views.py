@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .llmRequest import parseLLMRequest
+from .llmRequest import parseLLMRequest, llm
 from .azureSearch import cognitiveSearch
 from .rules import test1, addRules,getRules,getRulesMappingById, editRules, getHandlers
 from .uploadFile import uploadFiles1, uploadFiles
@@ -7,7 +7,7 @@ from .cogSearch import addLibs, saveWf,runWf,getWf, getLibs
 
 # Create your views here.
 def llmRequest(request):
-    return parseLLMRequest(request)
+    return llm(request)
 
 def cogsearch(request):
     return cognitiveSearch(request)
