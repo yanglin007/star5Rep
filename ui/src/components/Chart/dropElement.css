@@ -1,0 +1,72 @@
+.dropElement .xItem {
+    margin-top: 5px;
+    overflow: hidden;
+    width: 100%;
+    padding: 0 8px;
+    line-height: 32px;
+    height: 32px;
+    background-color: #fff;
+    border-radius: 4px;
+    border: solid 1px #0099cc;
+}
+
+.dropElement .yItem {
+    margin-top: 5px;
+    overflow: hidden;
+    width: 100%;
+    border: 1px solid #fff;
+    padding-left: 5px;
+    line-height: 32px;
+    height: 32px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.dropElement .yItem .icon {
+    padding-left: 0
+}
+
+.dropElement .typeSelect {
+    width: 100%;
+}
+
+.dropElement .typeSelect .ant-select-arrow {
+    right: 5px
+}
+
+.dropElement .ant-select-selection__rendered {
+    margin-left: 5px;
+    margin-right: 5px
+}
+
+.dropElement .ant-select-selection {
+    border: none
+}
+
+.dropElement .anticon-close {
+    margin-top: 8px;
+    margin-left: 8px;
+    padding: 0
+}
+
+.dropElement .ant-select-selection-selected-value {
+    padding: 0
+}
+
+.dropElement .ant-select-focused :focus {
+    box-shadow: none !important;
+    border: none
+}
+
+.dropElement .type {
+    float: right;
+}
+
+.dropElement .colorLabel {
+    position: absolute;
+    display: block;
+    width: 12px;
+    left: 5px;
+    height: 12px;
+    top: 2px;
+}
