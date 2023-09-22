@@ -1,0 +1,37 @@
+.configDropBox {
+    height: 180px;
+    width: 100%;
+    position: relative;
+    background-color: #fafafa;
+    border-radius: 4px;
+    border: solid 1px #f0f0f0;
+    overflow: auto;
+}
+
+.configDropBox .topTitle {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px;
+    background: #f6f6f6
+}
+
+.configDropBox .dropBox {
+    width: 100%;
+    padding: 10px;
+    background-color: #fafafa;
+}
+
+.configDropBox .dropOver {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    opacity: 0.5;
+    background: yellow
+}
+
+.configDropBox .dropOver.noDrop {
+    background: red
+}

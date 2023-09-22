@@ -1,0 +1,4 @@
+if user asked something about 'data from excel', please return 'get data from excel';
+if user asked something about 'data from database', please return 'get data from database';
+if user asked something about 'generate pie report', please return 'generate pie report';
+if user asked something about 'generate bar report', please return 'generate bar report';
