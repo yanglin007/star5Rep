@@ -29,8 +29,9 @@ def init():
     #init for azure serach
     os.environ["AZURE_SEARCH_ENDPOINT"]="https://star5search.search.windows.net"
     os.environ["AZURE_SERACH_INDEX_NAME"]="star5index"
-    os.environ["AZURE_SERACH_ADMIN_KEY"]="Cw5EBUxaizS4jBFbFdQvohEOSaNCHO3PXC17u6GQy8AzSeDRVUOZ"
+    os.environ["AZURE_SERACH_ADMIN_KEY"]="hvAR0OkivJ0pGogSh8EGKPFx37ATCEoaAANpoXBxI4AzseCxSaMQ"
     os.environ["AZURE_SERACH_INDEXER"] ="star5-cosmosdb-indexer"
+
 
     #---------------------sql database -----------------------
     #os.environ["DB_CONNECT_STR"] ="mssql+pymssql://e515962:%^TYGH78uijk@star5sqldbserver.database.windows.net/star5sqldatabase"
@@ -39,10 +40,11 @@ def init():
 
 
  #---------------------blob storage -----------------------
-    os.environ["STORAGE_ACCOUNT"] =""
-    os.environ["STORAGE_CONTAINER"] =""
-    os.environ["STORAGE_KEY"] = ""
+    os.environ["STORAGE_ACCOUNT"] ="star5storage"
+    os.environ["STORAGE_CONTAINER"] ="star5blobcontainer"
+    os.environ["STORAGE_KEY"] = "9+uBgwzQHxAORb88MHrxM9JwG6yn5nz5orFQ4rpD8sZoTJ2g12Ri0JGn43gFJ/aUYU80V6xTPhBd+ASt4VLcaQ=="
 
     #------------recognizer---------
     os.environ["RECOGNIZER_ENDPOINT"] = "https://star5formrecognizer.cognitiveservices.azure.com"
     os.environ["RECOGNIZER_KEY"] = "df6d17da3bd343ed865120e4b95b4372"
+
