@@ -22,7 +22,7 @@ def init():
     # )
     # init for openai(openai embedding, openai chat)
     # os.environ["OPENAI_API_TYPE"] = "azure"
-    os.environ["OPENAI_API_KEY"] ="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"
+    os.environ["OPENAI_API_KEY"] ="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"
     #os.environ["OPENAI_API_BASE"] ="http://flag.smarttrot.com/index.php/api/v1" #https://<your-endpoint.openai.azure.com/
     # os.environ["OPENAI_API_VERSION"] = "2023-03-15-preview"
 
@@ -34,8 +34,7 @@ def init():
 
 
     #---------------------sql database -----------------------
-    #os.environ["DB_CONNECT_STR"] ="mssql+pymssql://e515962:%^TYGH78uijk@star5sqldbserver.database.windows.net/star5sqldatabase"
-    os.environ["DB_CONNECT_STR"] ="mysql+pymysql://root:123456@127.0.0.1/openai"
+    os.environ["DB_CONNECT_STR"] ="mssql+pymssql://e515962:%^TYGH78uijk@star5sqldbserver.database.windows.net/star5db"
 
 
 

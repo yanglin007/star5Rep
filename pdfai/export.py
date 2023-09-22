@@ -16,60 +16,74 @@ from azure.core.credentials import AzureKeyCredential
 import os
 from PIL import Image
   
-def getDataFromDb(query=None, rule_id=None):   
+def getDataFromDb(dt, config):   
     cursor = connection.cursor()  
-   
+    query = json.loads(config).get("query")
     query = "select * from trades"
     cursor.execute(query)  
     
     results = cursor.fetchall()  
   
     df = pd.DataFrame(results, columns=[column[0] for column in cursor.description])  
-    rule_id = 9
+    rule_id = json.loads(config).get("rule_id")
     if rule_id != None:
         df = mappingtransfer(df,rule_id)
 
     connection.close()  
     return df
 
-def getDataFromExcel(file_name="data.xlsx"):
+def getDataFromExcel(dt, config):
+    file_name = json.loads(config).get("file_name")
+    file_name="data.xlsx"
     file_path = os.path.dirname(os.path.abspath(__file__))
     base_path = os.path.join(file_path, file_name)
     return  pd.read_excel(base_path)
 
-def getDataFromImages(file_name="test.pdf"):
+def getDataFromImages(dt,config):
+    filename = json.loads(config).get("file_name")
+    filename = "TRADES.pdf"
     file_path = os.path.dirname(os.path.abspath(__file__))
-    base_path = os.path.join(file_path, file_name)
+    base_path = os.path.join(file_path, filename)
     
-    filename = "Trades.jpg"
 
-    #store file to blob storage
-    storage_account_url = f'https://{os.environ.get("STORAGE_ACCOUNT")}.blob.core.windows.net'
+    # store file to blob storage
+    # storage_account_url = f'https://{os.environ.get("STORAGE_ACCOUNT")}.blob.core.windows.net'
     
-    storage_container = os.environ.get("STORAGE_CONTAINER")
+    # storage_container = os.environ.get("STORAGE_CONTAINER")
    
     doc_analysis_client = DocumentAnalysisClient(
                     endpoint=os.environ.get("RECOGNIZER_ENDPOINT"),#"form recognizer endpoin",
                     credential=AzureKeyCredential(os.environ.get("RECOGNIZER_KEY")),
                 )
 
-    poller = doc_analysis_client.begin_analyze_document_from_url(
-                "prebuilt-document", document_url = f'{storage_account_url}/{storage_container}/' + filename)
-        
+    with open(base_path,"rb") as f:
+            poller = doc_analysis_client.begin_analyze_document(
+                    "prebuilt-document", document=f)
 
     result = poller.result()
     res_dict = [item.to_dict() for item in result.key_value_pairs]
-    return pd.DataFrame.from_dict(res_dict)
+    ls = []
+    for item in res_dict:
+        a ={item["key"]["content"]:item["value"]["content"]}
+        ls.append(a)
 
-def export_excel(df,target_path='share1.xlsx'):
+    print("-----------------",ls)
+    return pd.DataFrame.from_dict(ls)
+
+def export_excel(df,config):
+    target_path = json.loads(config).get("file_name")
+    target_path='share1.xlsx'
     df.to_excel(target_path, index=False)  
 
 
-def export_json(df):  
+def export_json(df,config):  
     df.to_json('data.json')
 
 
-def data_to_pie(df,file_name,target_path = './mypy//'):
+def data_to_pie(df,config):
+      file_name = json.loads(config).get("file_name")
+      target_path = json.loads(config).get("target_path")
+      target_path = './mypy//'
       df = df.from_dict(orient='index', columns=['value'])  
       fig, ax = plt.subplots() 
       ax.pie(df['value'], labels=df.index, autopct='%1.1f%%', startangle=90)  
@@ -88,7 +102,10 @@ def data_to_pie(df,file_name,target_path = './mypy//'):
   
       shutil.move(source_file, target_path)
 
-def data_to_line(df,file_name,target_path= './mypy//'):
+def data_to_line(df,config):
+    file_name = json.loads(config).get("file_name")
+    target_path = json.loads(config).get("target_path")
+    target_path = './mypy//'
     # df = pd.DataFrame(data)  
     plt.figure(figsize=(10,5)) 
     # labels = list(data.keys()) 
@@ -111,7 +128,10 @@ def data_to_line(df,file_name,target_path= './mypy//'):
     shutil.move(source_file, target_path)
 
 
-def data_to_bar(df,file_name,target_path= './mypy//'):
+def data_to_bar(df,config):
+    file_name = json.loads(config).get("file_name")
+    target_path = json.loads(config).get("target_path")
+    target_path = './mypy//'
     # df = pd.DataFrame(data, index=['X', 'Y', 'Z'])
     c = canvas.Canvas(file_name, pagesize=letter)
     fig, ax = plt.subplots()  
@@ -129,5 +149,3 @@ def data_to_bar(df,file_name,target_path= './mypy//'):
         os.remove(target_file) 
   
     shutil.move(source_file, target_path)
-
-

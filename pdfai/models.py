@@ -49,8 +49,10 @@ class Workflow(models.Model):
     work_flow_name = models.CharField(max_length=100)
     work_flow_desc = models.CharField(max_length=500, null=True)
     lib_id = models.IntegerField()
+    config = models.CharField(max_length=1000,null=True)
     node_list = models.CharField(max_length=2000,null=True)
     edge_list = models.CharField(max_length=2000,null=True)
+    config_list = models.CharField(max_length=1000,null=True)
     create_user = models.CharField(max_length=500, null=True, default="Admin")
     class Meta:
         db_table = 'work_flow'

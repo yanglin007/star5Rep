@@ -59,16 +59,23 @@ def saveWf(request):
     wf_name = params["wf_name"]
     wf_desc = params["wf_desc"]
     libs = params["libs"]
+    config_list = params["config_list"]
+    edge_list = params["edge_list"]
+    node_list = params["node_list"]
     max_wf_id = Workflow.objects.aggregate(Max('work_flow_id'))
     i = 0
     for item in libs:
         i = i +1
-        wf = Workflow(work_flow_id = max_wf_id + 1,order_num =i,work_flow_name=wf_name,work_flow_desc=wf_desc,lib_id= item.lib_id)
+        wf = Workflow(work_flow_id = max_wf_id + 1,order_num =i,work_flow_name=wf_name,
+                      work_flow_desc=wf_desc,lib_id= item.lib_id, config = item.config,
+                      config_list = config_list,edge_list = edge_list,node_list =node_list)
         wf.save()
 
 def getWf(request):
     wfs = Workflow.objects.values("work_flow_id","work_flow_name","work_flow_desc").distinct()
-    return JsonResponse(BaseResponse(1,list(wfs.values("work_flow_id","work_flow_name","work_flow_desc","create_user","node_list","edge_list")),"success").__dict__,safe=False)
+    return JsonResponse(BaseResponse(1,list(wfs.values("work_flow_id","work_flow_name","work_flow_desc",
+                                                       "create_user", "config_list",
+                                                       "node_list","edge_list")),"success").__dict__,safe=False)
 
 def runWf(request):
     wf_id = json.loads(request.body).get("wf_id")
@@ -78,18 +85,18 @@ def runWf(request):
         for wf in qs:
            lib = Libs.objects.get(lib_id = wf.lib_id)
            if i==0:
-               previous = eval(lib.lib_func)()
+               previous = eval(lib.lib_func)(None,qs.config)
                i=i+1
            else:
-               previous=eval(lib.lib_func)(previous)
+               previous=eval(lib.lib_func)(previous, qs.config)
     else:
         libs = json.loads(request.body)["libs"]
         i =0
         for lib in libs:
             if i==0:
-                previous = eval(lib["lib_func"])()
+                previous = eval(lib["lib_func"])(None,qs.config)
                 i = i +1
-            previous = eval(lib["lib_func"])(previous)
+            previous = eval(lib["lib_func"])(previous,qs.config)
 
     return BaseResponse.success()
 
@@ -114,6 +121,12 @@ def addLibs(request):
     lib = Libs(lib_name='Export Data to Excel',lib_func='export_excel')
     lib.save()
     lib = Libs(lib_name='Export Data to Json',lib_func='export_json')
+    lib.save()
+    lib = Libs(lib_name='Export Data to Pie',lib_func='data_to_pie')
+    lib.save()
+    lib = Libs(lib_name='Export Data to Line',lib_func='data_to_line')
+    lib.save()
+    lib = Libs(lib_name='Export Data to Bar',lib_func='data_to_bar')
     lib.save()
     # addWf()
 
